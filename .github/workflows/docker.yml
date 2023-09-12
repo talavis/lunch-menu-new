@@ -13,19 +13,18 @@ on:
   # generate images for releases, using the tag name
   # the newest one will be latest as well
   release:
-    types: [published]
+    types:
+      - published
 jobs:
   push_to_registry:
-    # only generate images when in the named repo
-    # (to avoid running the action in forks)
     if: github.repository == 'talavis/lunch-menu'
     name: Publish Docker Image
     runs-on: ubuntu-latest
-    # Cancel earlier job if there is a new one for the same branch/release
+
     concurrency:
       group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}: ${{ matrix.dockerfile }}'
       cancel-in-progress: true
-    # Define the images/tags to build; will run in parallell
+
     strategy:
       matrix:
         include:
@@ -35,10 +34,12 @@ jobs:
           - dockerfile: Dockerfiles/Dockerfile.frontend
             images: |
               ghcr.io/talavis/menu-frontend
+
     permissions:
       contents: read
       packages: write
       id-token: write
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -74,8 +75,8 @@ jobs:
           build-args: version=${{ github.ref_name }}
           # Set to wanted target, or remove if you do not use targets
           target: production
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
 
       - name: Sign the images with GitHub OIDC Token
         env:
