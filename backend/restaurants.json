@@ -2,14 +2,14 @@
   "restaurants": [
     {
       "coordinate": [
-	59.37178,
-	18.02483
+	59.37244,
+	18.02385
       ],
       "homepage": "https://www.compass-group.se/matdryck/restauranger/solna/food--co-frosundavik/",
       "identifier": "food-co",
       "menuUrl": "https://eurest.mashie.com/public/menu/fr%c3%b6sundavik/48a47b5a?country=se",
-      "name": "Food &and; Co Fr&ouml;sundavik",
-      "region": "Fr&ouml:sundavik"
+      "name": "Food & Co Frösundavik",
+      "region": "Frösundavik"
     }
   ]
 }
