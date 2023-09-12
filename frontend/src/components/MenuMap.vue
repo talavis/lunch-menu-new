@@ -119,10 +119,12 @@ export default {
       this.selectedRestaurant = '',
       this.currRes = null;
       this.updateResSource();
-      if (this.resSource.getFeatures().length > 0)
+      if (this.resSource.getFeatures().length > 1)
         this.mapObject.getView().fit(this.resSource.getExtent(), {padding: [70, 70, 70, 70]});
+      else if (this.resSource.getFeatures().length === 1)
+	this.mapObject.setView(new View({center: this.resSource.getFeatures()[0].getGeometry().getCoordinates(), zoom:17}))
       else
-      this.mapObject.setView(new View({center: fromLonLat([18.02588, 59.34864]), zoom:15}))
+      this.mapObject.setView(new View({center: fromLonLat([18.02290,59.37137]), zoom:17}))
     },
   }, 
   
