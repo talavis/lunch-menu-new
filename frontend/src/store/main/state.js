@@ -3,7 +3,7 @@ export default function () {
     restaurants: [],
     visibleRestaurants: [],
     showMap: true,
-    currentRegion: 'solna',
+    currentRegion: 'frösundavik',
     favourites: [],
     showMapList: 'map',
   }
