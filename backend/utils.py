@@ -59,6 +59,7 @@ REST_DATA = read_restaurants(open(REST_FILENAME).read())
 
 MAPPER = {
     "food-co": ps.parse_food_co,
+    "k-markt": ps.parse_kmarkt,
 }
 
 

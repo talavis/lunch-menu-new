@@ -197,7 +197,7 @@ def get_year():
 @restaurant
 def parse_food_co(res_data: dict) -> dict:
     """
-    Parse the menu of Restaurang Bikupan
+    Parse the menu of Food & Co
     """
     data = {"menu": []}
     soup = get_parser(res_data["menuUrl"])
@@ -209,3 +209,9 @@ def parse_food_co(res_data: dict) -> dict:
     return data
 
 
+@restaurant
+def parse_kmarkt(res_data: dict) -> dict:
+    """
+    Parse the menu of K-märkt. No menu available online.
+    """
+    return {"menu": []}

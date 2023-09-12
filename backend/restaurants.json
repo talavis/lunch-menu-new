@@ -10,6 +10,17 @@
       "menuUrl": "https://eurest.mashie.com/public/menu/fr%c3%b6sundavik/48a47b5a?country=se",
       "name": "Food & Co Frösundavik",
       "region": "Frösundavik"
+    },
+    {
+      "coordinate": [
+	59.37107,
+	18.01713
+      ],
+      "homepage": "https://www.kmarkt.se/restauranger/centrala-frosunda/",
+      "identifier": "k-markt",
+      "menuUrl": "",
+      "name": "K-märkt centrala Frösunda",
+      "region": "Frösundavik"
     }
   ]
 }
