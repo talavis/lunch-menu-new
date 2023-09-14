@@ -2,14 +2,7 @@
 <q-layout view="lHh Lpr lFf">
   <q-header elevated reveal>
     <q-toolbar>
-      <q-btn type="a"
-             href="https://www.scilifelab.se/data/"
-             flat>
-	<q-avatar square>
-          <img :src="require('assets/sll-logo.svg')"
-	       alt="SciLifeLab logo"/>
-	</q-avatar>
-      </q-btn>      
+      <q-avatar icon="las la-utensils" />
       <q-toolbar-title>
 	{{ today }}
       </q-toolbar-title>
@@ -30,7 +23,7 @@
              dense
              icon="lab la-github"
              type="a"
-             href="https://github.com/ScilifelabDataCentre/lunch-menu" />
+             href="https://github.com/talavis/lunch-menu" />
     </q-toolbar>
   </q-header>
   <q-page-container>

@@ -2,8 +2,8 @@
   "name": "menu-aggregator",
   "version": "0.0.1",
   "description": "Lunch menu aggregator for restaurants near SciLifeLab",
-  "productName": "SciLifeLab Menu Aggregator",
-  "author": "Linus Östberg <linus.ostberg@scilifelab.uu.se>",
+  "productName": "Menu Aggregator",
+  "author": "Linus Östberg <linus@oestberg.dev>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
