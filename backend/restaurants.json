@@ -21,6 +21,17 @@
       "menuUrl": "",
       "name": "K-märkt centrala Frösunda",
       "region": "Frösundavik"
+    },
+    {
+      "coordinate": [
+	59.37300,
+	18.01664
+      ],
+      "homepage": "https://bredbarsolna.se/dagens-lunch-frosunda/",
+      "identifier": "bredbar",
+      "menuUrl": "https://bredbarsolna.se/dagens-lunch-frosunda/",
+      "name": "Bredbar Frösunda",
+      "region": "Frösundavik"
     }
   ]
 }

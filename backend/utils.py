@@ -58,6 +58,7 @@ def read_restaurants(intext: str) -> dict:
 REST_DATA = read_restaurants(open(REST_FILENAME).read())
 
 MAPPER = {
+    "bredbar": ps.parse_bredbar,
     "food-co": ps.parse_food_co,
     "k-markt": ps.parse_kmarkt,
 }
