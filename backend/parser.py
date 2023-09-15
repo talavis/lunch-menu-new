@@ -185,7 +185,7 @@ def parse_bredbar(res_data: dict) -> dict:
     soup = get_parser(res_data["menuUrl"])
 
     menu = soup.find_all("h1")[1].parent
-    data["menu"] = [entry.text[1:] for entry in menu if entry.text.startswith("*")]
+    data["menu"] = [entry.text[1:] for entry in menu if entry.text.startswith("*") and len(entry.text) > 1]
 
     return data
 
