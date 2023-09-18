@@ -11,6 +11,10 @@ on:
     branches:
       - conoa
       - demo
+      - dev
+    paths:
+      - frontend/**
+      - backend/**
   # generate images for releases, using the tag name
   # the newest one will be latest as well
   release:
