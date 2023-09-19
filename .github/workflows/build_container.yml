@@ -6,6 +6,7 @@ on:
       - Dockerfiles/**
       - frontend/**
       - backend/**
+      - .github/workflows/build_container.yml
   release:
     types:
       - published
@@ -24,10 +25,10 @@ jobs:
         include:
           - dockerfile: Dockerfiles/Dockerfile.backend
             images: |
-              ghcr.io/{{ github.repository_owner }}/argo-demo-backend
+              ghcr.io/${{ github.repository_owner }}/argo-demo-backend
           - dockerfile: Dockerfiles/Dockerfile.frontend
             images: |
-              ghcr.io/{{ github.repository_owner }}/argo-demo-frontend
+              ghcr.io/${{ github.repository_owner }}/argo-demo-frontend
 
     permissions:
       contents: read
