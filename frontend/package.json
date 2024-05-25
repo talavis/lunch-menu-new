@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
-    "@quasar/app": "^3.3.3",
+    "@quasar/app-webpack": "^3.3.3",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.6.0",
