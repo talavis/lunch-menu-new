@@ -2,14 +2,6 @@
 <q-layout view="lHh Lpr lFf">
   <q-header elevated reveal>
     <q-toolbar>
-      <q-btn type="a"
-             href="https://www.scilifelab.se/data/"
-             flat>
-	<q-avatar square>
-          <img :src="require('assets/sll-logo.svg')"
-	       alt="SciLifeLab logo"/>
-	</q-avatar>
-      </q-btn>      
       <q-toolbar-title>
 	{{ today }}
       </q-toolbar-title>
@@ -30,7 +22,7 @@
              dense
              icon="lab la-github"
              type="a"
-             href="https://github.com/ScilifelabDataCentre/lunch-menu" />
+             href="https://github.com/talavis/lunch-menu" />
     </q-toolbar>
   </q-header>
   <q-page-container>
@@ -45,35 +37,6 @@ import { setCssVar } from 'quasar'
 export default {
   name: 'MainLayout',
 
-  computed: {  
-    showSolna: {
-      get () {
-        return this.$store.state.main.showSolna;
-      },
-      set (val) {
-        this.$store.dispatch('main/setShowSolna', val)
-      }
-    },
-
-    showUppsala: {
-      get () {
-        return this.$store.state.main.showUppsala;
-      },
-      set (val) {
-        this.$store.dispatch('main/setShowUppsala', val)
-      }
-    },
-
-    onlyFavourites: {
-      get () {
-        return this.$store.state.main.onlyFavourites;
-      },
-      set (val) {
-        this.$store.dispatch('main/setOnlyFavourites', val)
-      }
-    }
-  },
-
   data () {
     return {
       today: '',
@@ -85,10 +48,10 @@ export default {
     toggleDark () {
       console.log("here")
       this.$q.dark.toggle();
-      if (this.$q.dark.isActive)
-        setCssVar('info', '#A7C947');
-      else
-        setCssVar('info', '#3F3F3F');
+//      if (this.$q.dark.isActive)
+//        setCssVar('info', '#A7C947');
+//      else
+//        setCssVar('info', '#3F3F3F');
     },
   },
   
