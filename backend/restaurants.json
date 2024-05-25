@@ -197,6 +197,40 @@
       "menuUrl": "https://ki.hors.se/17/7/svarta-rafven/",
       "name": "Svarta R\u00e4fven",
       "region": "Solna"
+    },
+    {
+      "coordinate": [
+	59.37244,
+	18.02385
+      ],
+      "homepage": "https://www.compass-group.se/matdryck/restauranger/solna/food--co-frosundavik/",
+      "identifier": "food-co",
+      "menuUrl": "https://eurest.mashie.com/public/menu/fr%c3%b6sundavik/48a47b5a?country=se",
+      "name": "Food & Co Frösundavik",
+      "region": "Frösundavik"
+    },
+    {
+      "coordinate": [
+	59.37107,
+	18.01713
+      ],
+      "homepage": "https://www.kmarkt.se/restauranger/centrala-frosunda/",
+      "identifier": "k-markt",
+      "menuUrl": "",
+      "name": "K-märkt centrala Frösunda",
+      "region": "Frösundavik"
+    },
+    {
+      "coordinate": [
+	59.37300,
+	18.01664
+      ],
+      "homepage": "https://bredbarsolna.se/dagens-lunch-frosunda/",
+      "identifier": "bredbar",
+      "menuUrl": "https://bredbarsolna.se/dagens-lunch-frosunda/",
+      "name": "Bredbar Frösunda",
+      "region": "Frösundavik"
     }
+
   ]
 }

@@ -485,3 +485,44 @@ def parse_svarta(res_data):
                 data["menu"].append(dish)
 
     return data
+
+
+# Frösundavik
+
+@restaurant
+def parse_bredbar(res_data: dict) -> dict:
+    """
+    Parse the menu of Food & Co
+    """
+    data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+
+    menu = soup.find_all("h1")[1].parent
+    data["menu"] = [entry.text[1:] for entry in menu if entry.text.startswith("*")]
+
+    return data
+
+
+@restaurant
+def parse_food_co(res_data: dict) -> dict:
+    """
+    Parse the menu of Food & Co
+    """
+    data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+
+    hit = soup.find("div", {"class": "day-current"}).parent
+
+    data["menu"] = [
+        dish.find("span").text for dish in hit.find_all("section", {"class": "day-alternative"})
+    ]
+
+    return data
+
+
+@restaurant
+def parse_kmarkt(res_data: dict) -> dict:
+    """
+    Parse the menu of K-märkt. No menu available online.
+    """
+    return {"menu": []}
