@@ -32,10 +32,10 @@ jobs:
         include:
           - dockerfile: Dockerfiles/Dockerfile.backend
             images: |
-              ghcr.io/scilifelabdatacentre/menu-backend
+              ghcr.io/talavis/menu-backend
           - dockerfile: Dockerfiles/Dockerfile.frontend
             images: |
-              ghcr.io/scilifelabdatacentre/menu-frontend
+              ghcr.io/talavis/menu-frontend
     permissions:
       contents: read
       packages: write
