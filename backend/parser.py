@@ -526,3 +526,12 @@ def parse_kmarkt(res_data: dict) -> dict:
     Parse the menu of K-märkt. No menu available online.
     """
     return {"menu": []}
+
+
+# Radiohuset
+@restaurant
+def parse_wkb_gardet(res_data: dict) -> dict:
+    """Parse the menu of WKB Gärdet."""
+    data = {"menu": []}
+
+    return data
