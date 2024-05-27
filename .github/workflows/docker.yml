@@ -19,7 +19,7 @@ jobs:
   push_to_registry:
     # only generate images when in the named repo
     # (to avoid running the action in forks)
-    if: github.repository == 'scilifelabdatacentre/lunch-menu'
+    if: github.repository == 'talavis/lunch-menu'
     name: Publish Docker Image
     runs-on: ubuntu-latest
     # Cancel earlier job if there is a new one for the same branch/release
