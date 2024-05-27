@@ -230,7 +230,17 @@
       "menuUrl": "https://bredbarsolna.se/dagens-lunch-frosunda/",
       "name": "Bredbar Frösunda",
       "region": "Frösundavik"
-    }
-
+    },
+    {
+      "coordinate": [
+	59.34125,
+	18.11252
+      ],
+      "homepage": "https://wkb.se/?page_id=79",
+      "identifier": "wkb-gardet",
+      "menuUrl": "https://wkb.se/?page_id=79",
+      "name": "WKB Gärdet",
+      "region": "Radiohuset"
+    },
   ]
 }
