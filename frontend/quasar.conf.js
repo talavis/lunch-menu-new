@@ -80,7 +80,7 @@ module.exports = configure(function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '/api': {
-          target: 'https://menu.dckube.scilifelab.se/api/',
+          target: 'http://localhost:8000/api',
           changeOrigin: true,
           pathRewrite: {
             '^/api': ''

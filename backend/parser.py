@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright (c) 2014-2022, Linus Östberg and contributors
+# Copyright (c) 2014-2024, Linus Östberg and contributors
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,172 +28,14 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-Parsers of the menu pages for the restaurants at Karolinska Institutet
+Menu parsers.
 """
 
-import datetime
-from datetime import date
 import re
-import sys
 
-import requests
-from bs4 import BeautifulSoup
-from collections import defaultdict
+from parser_helpers import *
 
 
-def restaurant(func):
-    """
-    Decorator to use for restaurants.
-    """
-
-    def helper(res_data):
-        map_url = (
-            "https://www.openstreetmap.org/#map=19/"
-            f"{res_data['coordinate'][0]}/{res_data['coordinate'][1]}"
-        )
-        data = {
-            "title": res_data["name"],
-            "location": res_data["region"],
-            "url": res_data["homepage"],
-            "map_url": map_url,
-        }
-        try:
-            data.update(func(res_data))
-        except Exception as err:
-            sys.stderr.write(f"Error in {func.__name__}: {err}\n")
-            data.update({"menu": []})
-            pass
-        return data
-
-    helper.__name__ = func.__name__
-    helper.__doc__ = func.__doc__
-
-    return helper
-
-
-def get_parser(url: str) -> BeautifulSoup:
-    """
-    Request page and create Beautifulsoup object
-    """
-    page_req = requests.get(url)
-    if page_req.status_code != 200:
-        raise IOError("Bad HTTP responce code")
-
-    return BeautifulSoup(page_req.text, "html.parser")
-
-
-def fix_bad_symbols(text):
-    """
-    HTML formatting of characters
-    """
-    text = text.replace("Ã¨", "è")
-    text = text.replace("Ã¤", "ä")
-    text = text.replace("Ã", "Ä")
-    text = text.replace("Ã", "Ä")
-    text = text.replace("Ã¶", "ö")
-    text = text.replace("Ã©", "é")
-    text = text.replace("Ã¥", "å")
-    text = text.replace("Ã", "Å")
-
-    text = text.strip()
-
-    return text
-
-
-### date management start ###
-def get_day():
-    """
-    Today as digit
-    """
-    return date.today().day
-
-
-def get_monthdigit():
-    """
-    Month as digit
-    """
-    return date.today().month
-
-
-def get_month():
-    """
-    Month name
-    """
-    months = {
-        1: "januari",
-        2: "februari",
-        3: "mars",
-        4: "april",
-        5: "maj",
-        6: "juni",
-        7: "juli",
-        8: "augusti",
-        9: "september",
-        10: "oktober",
-        11: "november",
-        12: "december",
-    }
-
-    return months[get_monthdigit()]
-
-
-def get_week():
-    """
-    Week number
-    """
-    return date.today().isocalendar()[1]
-
-
-def get_weekday(lang="sv", tomorrow=False):
-    """
-    Day name in swedish(sv) or english (en)
-    """
-    wdigit = get_weekdigit()
-    if tomorrow:
-        wdigit += 1
-    if lang == "sv":
-        weekdays = {
-            0: "måndag",
-            1: "tisdag",
-            2: "onsdag",
-            3: "torsdag",
-            4: "fredag",
-            5: "lördag",
-            6: "söndag",
-            7: "måndag",
-        }
-    if lang == "en":
-        weekdays = {
-            0: "monday",
-            1: "tuesday",
-            2: "wednesday",
-            3: "thursday",
-            4: "friday",
-            5: "saturday",
-            6: "sunday",
-            7: "monday",
-        }
-    return weekdays[wdigit]
-
-
-def get_weekdigit():
-    """
-    Get digit for week (monday = 0)
-    """
-    return date.today().weekday()
-
-
-def get_year():
-    """
-    Year as number
-    """
-    return date.today().year
-
-
-### date management end ###
-
-
-### parsers start ###
 @restaurant
 def parse_bikupan(res_data: dict) -> dict:
     """
@@ -483,5 +325,99 @@ def parse_svarta(res_data):
                     else:
                         dish += row.text.strip()
                 data["menu"].append(dish)
+
+    return data
+
+
+# Frösundavik
+
+
+@restaurant
+def parse_bredbar(res_data: dict) -> dict:
+    """
+    Parse the menu of Food & Co
+    """
+    data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+
+    menu = soup.find_all("h1")[1].parent
+    data["menu"] = [entry.text[1:] for entry in menu if entry.text.startswith("*")]
+
+    return data
+
+
+@restaurant
+def parse_food_co(res_data: dict) -> dict:
+    """
+    Parse the menu of Food & Co
+    """
+    data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+
+    hit = soup.find("div", {"class": "day-current"}).parent
+
+    data["menu"] = [
+        dish.find("span").text for dish in hit.find_all("section", {"class": "day-alternative"})
+    ]
+
+    return data
+
+
+@restaurant
+def parse_kmarkt(res_data: dict) -> dict:
+    """
+    Parse the menu of K-märkt. No menu available online.
+    """
+    return {"menu": []}
+
+
+# Radiohuset
+@restaurant
+def parse_wkb_gardet(res_data: dict) -> dict:
+    """Parse the menu of WKB Gärdet."""
+    data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+    section = soup.find("div", {"class": "post-content"})
+    days = section.find(text=re.compile(get_weekday(), re.IGNORECASE)).parent.parent
+    active = False
+    for row in days:
+        if row.name == "strong" and get_weekday() in row.text.lower():
+            active = True
+            continue
+        if active:
+            if row.name == "strong":
+                break
+            if row.text:
+                data["menu"].append(row.text)
+
+    return data
+
+
+@restaurant
+def parse_gourmedia(res_data: dict) -> dict:
+    """Parse the menu of Gourmedia."""
+    data = {"menu": []}
+#    soup = get_parser(res_data["menuUrl"])
+#    days = soup.find("fluid-columns-repeater")
+#    for day in days.children:
+#        if get_weekday() in day.text:
+#           pass
+    return data
+
+
+@restaurant
+def parse_karavan(res_data: dict) -> dict:
+    """Parse the menu of Restaurang Karavan."""
+    data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+    section = soup.find_all("div", {"class": "menu-content"})
+    week = None
+    for part in section:
+        if str(get_week()) in part.find("div", {"class": "menu-heading"}).text:
+            week = part
+            break
+    if week:
+        day = week.find("div", {"class": get_weekday(lang="en")})
+        data["menu"] = [dish.text.strip() for dish in day.find_all("p")]
 
     return data
