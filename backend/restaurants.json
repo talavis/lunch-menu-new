@@ -241,6 +241,28 @@
       "menuUrl": "https://wkb.se/?page_id=79",
       "name": "WKB Gärdet",
       "region": "Radiohuset"
+    },
+    {
+      "coordinate": [
+	59.33921,
+	18.10258
+      ],
+      "homepage": "https://www.restaurangkaravan.se/",
+      "identifier": "karavan",
+      "menuUrl": "https://www.restaurangkaravan.se/",
+      "name": "Restaurang Karavan",
+      "region": "Radiohuset"
+    },
+    {
+      "coordinate": [
+	59.33573,
+	18.10206
+      ],
+      "homepage": "https://www.iss-menyer.se/restaurants/restaurang-gourmedia",
+      "identifier": "gourmedia",
+      "menuUrl": "https://www.iss-menyer.se/restaurants/restaurang-gourmedia",
+      "name": "Gourmedia",
+      "region": "Radiohuset"
     }
   ]
 }
