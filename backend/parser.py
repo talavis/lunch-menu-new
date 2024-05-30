@@ -376,3 +376,17 @@ def parse_wkb_gardet(res_data: dict) -> dict:
     data = {"menu": []}
 
     return data
+
+@restaurant
+def parse_gourmedia(res_data: dict) -> dict:
+    """Parse the menu of Gourmedia."""
+    data = {"menu": []}
+
+    return data
+
+@restaurant
+def parse_karavan(res_data: dict) -> dict:
+    """Parse the menu of Restaurang Karavan."""
+    data = {"menu": []}
+
+    return data

@@ -66,11 +66,13 @@ MAPPER = {
     "elma": ps.parse_elma,
     "food-co": ps.parse_food_co,
     "glada": ps.parse_glada,
+    "gourmedia": ps.parse_gourmedia,
     "haga": ps.parse_haga,
     "hubben": ps.parse_hubben,
     "jons": ps.parse_jons,
     "jorpes": ps.parse_jorpes,
     "k-markt": ps.parse_kmarkt,
+    "karavan": ps.parse_karavan,
     "kraemer": ps.parse_kraemer,
     "livet": ps.parse_livet,
     "maethai": ps.parse_maethai,
@@ -79,6 +81,7 @@ MAPPER = {
     "rudbeck": ps.parse_rudbeck,
     "street": ps.parse_street,
     "svarta": ps.parse_svarta,
+    "wkb-gardet": ps.parse_wkb_gardet,
 }
 
 
