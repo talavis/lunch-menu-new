@@ -33,7 +33,6 @@ Helper functions for the menu parsers.
 
 import datetime
 from datetime import date
-import re
 import sys
 
 import requests

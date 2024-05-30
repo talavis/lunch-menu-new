@@ -31,6 +31,8 @@
 Menu parsers.
 """
 
+import re
+
 from parser_helpers import *
 
 
@@ -374,15 +376,34 @@ def parse_kmarkt(res_data: dict) -> dict:
 def parse_wkb_gardet(res_data: dict) -> dict:
     """Parse the menu of WKB Gärdet."""
     data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+    section = soup.find("div", {"class": "post-content"})
+    days = section.find(text=re.compile(get_weekday(), re.IGNORECASE)).parent.parent
+    active = False
+    for row in days:
+        if row.name == "strong" and get_weekday() in row.text.lower():
+            active = True
+            continue
+        if active:
+            if row.name == "strong":
+                break
+            if row.text:
+                data["menu"].append(row.text)
 
     return data
+
 
 @restaurant
 def parse_gourmedia(res_data: dict) -> dict:
     """Parse the menu of Gourmedia."""
     data = {"menu": []}
-
+#    soup = get_parser(res_data["menuUrl"])
+#    days = soup.find("fluid-columns-repeater")
+#    for day in days.children:
+#        if get_weekday() in day.text:
+#           pass
     return data
+
 
 @restaurant
 def parse_karavan(res_data: dict) -> dict:
