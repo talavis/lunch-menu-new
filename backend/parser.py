@@ -409,5 +409,15 @@ def parse_gourmedia(res_data: dict) -> dict:
 def parse_karavan(res_data: dict) -> dict:
     """Parse the menu of Restaurang Karavan."""
     data = {"menu": []}
+    soup = get_parser(res_data["menuUrl"])
+    section = soup.find_all("div", {"class": "menu-content"})
+    week = None
+    for part in section:
+        if str(get_week()) in part.find("div", {"class": "menu-heading"}).text:
+            week = part
+            break
+    if week:
+        day = week.find("div", {"class": get_weekday(lang="en")})
+        data["menu"] = [dish.text.strip() for dish in day.find_all("p")]
 
     return data
