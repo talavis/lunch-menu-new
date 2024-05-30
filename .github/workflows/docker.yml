@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - main
+      - updating
   # generate images for releases, using the tag name
   # the newest one will be latest as well
   release:
@@ -18,7 +19,7 @@ jobs:
   push_to_registry:
     # only generate images when in the named repo
     # (to avoid running the action in forks)
-    if: github.repository == 'scilifelabdatacentre/lunch-menu'
+    if: github.repository == 'talavis/lunch-menu'
     name: Publish Docker Image
     runs-on: ubuntu-latest
     # Cancel earlier job if there is a new one for the same branch/release
@@ -31,10 +32,10 @@ jobs:
         include:
           - dockerfile: Dockerfiles/Dockerfile.backend
             images: |
-              ghcr.io/scilifelabdatacentre/menu-backend
+              ghcr.io/talavis/menu-backend
           - dockerfile: Dockerfiles/Dockerfile.frontend
             images: |
-              ghcr.io/scilifelabdatacentre/menu-frontend
+              ghcr.io/talavis/menu-frontend
     permissions:
       contents: read
       packages: write
