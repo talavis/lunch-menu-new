@@ -18,7 +18,7 @@ export function getRestaurants ({ commit }) {
 export function getRestaurant ({ commit }, identifier) {
   return new Promise((resolve, reject) => {
     axios
-      .get('https://menu-page-backend.azurewebsites.net/api/restaurant' + identifier)
+      .get('https://menu-page-backend.azurewebsites.net/api/restaurant/' + identifier)
       .then((response) => {
         resolve(response);
       })
