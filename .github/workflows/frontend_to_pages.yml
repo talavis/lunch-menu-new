@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Build frontend
         run: |
@@ -24,6 +24,7 @@ jobs:
           yarn install
           yarn global add @quasar/cli
           quasar build
+          sed -i 's|/api/restaurant|https://menu-page-backend.azurewebsites.net/api/restaurant|g' dist/spa/js/*
           cd ..
 
       - name: Deploy to Github Pages
