@@ -50,8 +50,13 @@ def read_restaurants(intext: str) -> dict:
     """
     indata = json.loads(intext)
     data = dict()
+    if regions := os.environ.get("REGIONS"):
+        regions = regions.split(",")
+
     for entry in indata["restaurants"]:
-        data[entry["identifier"]] = entry
+        if not regions or entry["region"] in regions:
+            data[entry["identifier"]] = entry
+
     return data
 
 
