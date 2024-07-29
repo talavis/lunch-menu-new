@@ -2,10 +2,10 @@
 <div class="justify-center">
   <div class="flex justify-center">
     <q-list class="flex-center">
-      <q-item v-for="restaurant in visibleRestaurants"
+      <q-item v-for="restaurant in store.visibleRestaurants"
               :key="restaurant.identifier">
         <q-item-section>
-          <res-entry :restaurantBase="restaurant" />
+          <RestaurantEntry :restaurantBase="restaurant" />
         </q-item-section>
       </q-item>
     </q-list>
@@ -18,53 +18,22 @@
 </div>
 </template>
 
-<script>
+<script setup>
 import RestaurantEntry from 'components/RestaurantEntry.vue'
 
-export default {
+import { ref, onMounted } from 'vue'
+import { useMenuHelperStore } from '../stores/menu'
+
+const store = useMenuHelperStore()
+
+const loading = ref(false)
+
+defineOptions({
   name: 'MenuList',
-  
-  components: {
-    'res-entry': RestaurantEntry,
-  },
-  
-  computed: {
-    restaurants: {
-      get () {
-        return this.$store.state.main.restaurants;
-      },
-    },
+})
 
-    favourites: {
-      get () {
-        return this.$store.state.main.favourites;
-      },
-    },
+onMounted(() => {
+  store.getRestaurants()
+})
 
-    currentRegion: {
-      get () {
-        return this.$store.state.main.currentRegion;
-      }
-    },
-
-    visibleRestaurants: {
-      get () {
-        return this.$store.state.main.visibleRestaurants;
-      }
-    },
-  },
-  
-  data () {
-    return {
-      error: false,
-      loading: true,
-      constTrue: true,
-    }
-  },
-
-  created () {
-    this.$store.dispatch('main/getRestaurants')
-      .then(() => this.loading = false);
-  }
-}
 </script>

@@ -3,7 +3,6 @@
   <div class="flex justify-center">
     <q-btn-toggle class="q-ma-md"
                   v-model="selectedRegion"
-                  toggle-color="info"
                   :options="regionChoices" />
   </div>
   <div v-if="selectedRegion != 'favourites'">
@@ -22,82 +21,75 @@
         />
     </div>
     <div v-if="showMapList === 'map'" class="q-my-lg q-mx-md">
-      <menu-map />
+      <MenuMap />
     </div>
     <div v-show="showMapList === 'list'" class="q-my-lg q-mx-md">
-      <menu-list />
+      <MenuList />
     </div>
   </div>
-  <menu-list v-else/>
+  <MenuList v-else/>
 </q-page>
 </template>
 
-<script>
+<script setup>
 import MenuList from 'components/MenuList.vue'
 import MenuMap from 'components/MenuMap.vue'
 
-export default {
-  name: 'PageIndex',
-  
-  components: {
-    'menu-list': MenuList,
-    'menu-map': MenuMap,
+import { laHeartSolid } from '@quasar/extras/line-awesome'
+
+import { ref, computed, onMounted } from 'vue'
+import { useMenuHelperStore } from '../stores/menu'
+
+defineOptions({
+  name: 'IndexPage',
+})
+
+const store = useMenuHelperStore()
+
+const regionChoices = computed(() => {
+  let regions = [];
+  for (let entry of store.restaurants)
+    if (!regions.includes(entry.region.toLowerCase()))
+      regions.push(entry.region.toLowerCase())
+  regions = regions.sort()
+  regions.forEach(function (value, i) {
+    regions[i] = {label: value, value: value}
+  });
+  regions.push({icon: laHeartSolid, value: 'favourites'})
+  return regions;
+})
+
+const selectedRegion = computed({
+  get() {
+    return store.currentRegion
   },
-
-  computed: {
-    regionChoices: {
-      get () {
-        let regions = [];
-        for (let entry of this.$store.state.main.restaurants)
-          if (!regions.includes(entry.region.toLowerCase()))
-            regions.push(entry.region.toLowerCase())
-        regions = regions.sort()
-        regions.forEach(function (value, i) {
-          regions[i] = {label: value, value: value}
-        });
-        regions.push({icon: 'las la-heart', value: 'favourites'})
-        return regions;
-      }
-    },
-
-    selectedRegion: {
-      get () {
-        return this.$store.state.main.currentRegion
-      },
-      set (newValue) {
-        this.$store.dispatch('main/setRegion', newValue)
-          .then(this.$store.dispatch('main/updateVisRes'));
-      }
-    },
-
-    showMapList: {
-      get () {
-        return this.$store.state.main.showMapList
-      },
-      set (newValue) {
-        this.$store.dispatch('main/setShowMapList', newValue)
-      }
-    },
-
-    restaurants: {
-      get () {
-        return this.$store.state.main.restaurants;
-      },
-    },
-  },
-  
-  data () {
-    return {
-      error: false,
-      loading: true,
-      constTrue: true,
-    }
-  },
-
-  created () {
-    this.$store.dispatch('main/getRestaurants')
-      .then(() => this.loading = false);
-    this.$store.dispatch('main/updateVisRes');
+  set(newValue) {
+    store.updateRegion(newValue)
   }
-}
+})
+
+const showMapList = computed({
+  get () {
+    return store.showMapList
+  },
+  set (newValue) {
+    store.showMapList = newValue
+  }
+})
+
+const error = ref(false)
+const loading = ref(false)
+
+onMounted(() => {
+  loading.value = true
+  store.getRestaurants()
+    .catch(() => {
+      error.value = true
+    })
+    .finally(() => {
+      loading.value = false
+    })
+  store.loadRegion()
+})
+
 </script>

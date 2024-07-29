@@ -14,13 +14,13 @@
       <q-btn flat
              round
              dense
-             :icon="$q.dark.isActive ? 'las la-sun' : 'las la-moon'"
+             :icon="$q.dark.isActive ? laSunSolid : laMoonSolid"
              @click="toggleDark" />
       
       <q-btn flat
              round
              dense
-             icon="lab la-github"
+             :icon="laGithub"
              type="a"
              href="https://github.com/talavis/lunch-menu" />
     </q-toolbar>
@@ -31,43 +31,33 @@
 </q-layout>
 </template>
 
-<script>
-import { setCssVar } from 'quasar'
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useQuasar } from 'quasar'
+import { laSunSolid, laMoonSolid, laGithub } from '@quasar/extras/line-awesome'
 
-export default {
-  name: 'MainLayout',
+defineOptions({
+  name: 'MainLayout'
+})
 
-  data () {
-    return {
-      today: '',
-      version: process.env.VERSION,
-    }
-  },
+const version = ref(process.env.VERSION)
+const today = ref('')
 
-  methods: {
-    toggleDark () {
-      console.log("here")
-      this.$q.dark.toggle();
-//      if (this.$q.dark.isActive)
-//        setCssVar('info', '#A7C947');
-//      else
-//        setCssVar('info', '#3F3F3F');
-    },
-  },
-  
-  created () {
-    if (this.$q.dark.isActive)
-      setCssVar('info', '#A7C947');
+onMounted(() => {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+                'Thursday', 'Friday', 'Saturday']
+  const months = ['January', 'February', 'March',
+                  'April', 'May', 'June',
+                  'July', 'August', 'September',
+                  'October', 'November', 'December']
+  let day = new Date()
+  today.value = days[day.getDay()] + ' ' + day.getDate() + ' ' + months[day.getMonth()]
+})
 
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-                  'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March',
-                    'April', 'May', 'June',
-                    'July', 'August', 'September',
-                    'October', 'November', 'December'];
-    let day = new Date();
-    this.today = days[day.getDay()] + ' ' + day.getDate() + ' ' + months[day.getMonth()];
-  }
-    
+const $q = useQuasar()
+
+function toggleDark () {
+  $q.dark.toggle();
 }
+
 </script>
